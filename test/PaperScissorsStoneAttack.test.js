@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe.only("paperScissorsStoneAttack", function () {
+describe("paperScissorsStoneAttack", function () {
   it("deploy", async function () {
     const paperScissorsStoneFactory = await ethers.getContractFactory("PaperScissorsStone");
     const paperScissorsStone = await paperScissorsStoneFactory.deploy();
