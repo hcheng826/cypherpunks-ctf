@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const hre = require('hardhat');
 
-describe.only("Fake Fibonacci", function () {
+describe("Fake Fibonacci", function () {
   it("test", async function () {
     // init
     const provider = hre.network.provider;
