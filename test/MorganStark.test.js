@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat");
 const hre = require('hardhat');
 
-describe.only("MorganStark", function () {
+describe("MorganStark", function () {
   it("deploy", async function () {
     const provider = hre.network.provider;
 
