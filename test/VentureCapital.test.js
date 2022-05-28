@@ -5,7 +5,7 @@ const hre = require('hardhat');
 
 // Approach 1: send ether to the pre-computed address that DeveloperAuthorizer is about to be deployed
 // Approach 2: kill the contract and re-deploy using CREATE2: https://hackernoon.com/using-ethereums-create2-nw2137q7
-describe.only("Venture Capital", function () {
+describe("Venture Capital", function () {
   it("Approach 1", async function () {
     const provider = hre.network.provider;
     const [player, deployer, client] = await hre.ethers.getSigners();
