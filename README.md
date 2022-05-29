@@ -9,15 +9,6 @@ The deployment of contract itself exceed the block gas limit. Will use local har
 
 Can bypass the check for `isManager` by sending the ether to the pre-computed address and turn on developer auth mode. But could only get a little money (100 wei) out each transaction. Couldn't find the way to quickly hack all the money.
 
-3. Strong Box
-
-Need the deployment script (which include the solution clues)
-
-4. Dragon
-
-Couldn't find the script for `setAccount`: https://github.com/cypherpunks-core/cypherpunks-ctf/search?q=setAccount
-
-
 ### Solutions
 1. Bank
 
