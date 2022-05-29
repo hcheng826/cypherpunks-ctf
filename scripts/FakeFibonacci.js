@@ -8,19 +8,14 @@ const { ethers } = require("hardhat");
 const hre = require("hardhat");
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
-
   // We get the contract to deploy
-  // const ffLibAttackFactory = await ethers.getContractFactory("FakeFibonacciLibAttack");
-  // const ffLibAttack = await ffLibAttackFactory.deploy();
-  // await ffLibAttack.deployed();
+  /*
+  const ffLibAttackFactory = await ethers.getContractFactory("FakeFibonacciLibAttack");
+  const ffLibAttack = await ffLibAttackFactory.deploy();
+  await ffLibAttack.deployed();
+  */
 
-  // console.log("FakeFibonacciLibAttack deployed to:", ffLibAttack.address);
+  console.log("FakeFibonacciLibAttack deployed to:", ffLibAttack.address);
 
   // change ffLib address
   // console.log('ffLibAttack.address:', ffLibAttack.address);
