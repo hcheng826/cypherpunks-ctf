@@ -13,6 +13,10 @@ Can bypass the check for `isManager` by sending the ether to the pre-computed ad
 
 Need the deployment script (which include the solution clues)
 
+4. Dragon
+
+Couldn't find the script for `setAccount`: https://github.com/cypherpunks-core/cypherpunks-ctf/search?q=setAccount
+
 
 ### Solutions
 1. Bank
