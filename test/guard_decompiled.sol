@@ -46,29 +46,29 @@ label_0000019F:
         var5 = 0x0;
         var6 = 0x0;
         require((0x5E335D9ECCD2000 < msg.value));
-        var3 = 0x1C;
+        var3 = 0x1C; // 28
 label_000001C7:
-        if ((0x20 < var3))
+        if ((0x20 < var3)) // 32 1st loop
         {
-            var3 = 0x1C;
+            var3 = 0x1C; // 28
 label_0000025E:
-            if ((0x20 < var3))
+            if ((0x20 < var3)) // 2nd loop
             {
                 var3 = 0x1C;
 label_000002D1:
-                if ((0x20 < var3))
+                if ((0x20 < var3)) // 3rd loop
                 {
                     mstore(0xA0,(0x1000000000000000000000000 * uint160(uint160(msg.sender))));
-                    mstore(0x80,0x14);
-                    mstore(0x40,0xB4);
-                    var11 = 0xB4;
-                    temp0 = mload(0x80);
-                    var13 = temp0;
-                    var14 = temp0;
+                    mstore(0x80,0x14); // 20
+                    mstore(0x40,0xB4); // 180
+                    var11 = 0xB4; // 180
+                    temp0 = mload(0x80); // 20
+                    var13 = temp0; // 20
+                    var14 = temp0; // 20
                     var15 = 0xB4;
                     var16 = 0xA0;
 label_000003B6:
-                    if ((var14 < 0x20))
+                    if ((var14 < 0x20)) // 4th loop
                     {
                         temp1 = mload(var16);
                         temp2 = mload(var15);
@@ -107,11 +107,11 @@ label_0000040F:
                     }
                     else
                     {
-                        temp6 = mload(var16);
+                        temp6 = mload(var16); // (0x1000000000000000000000000 * uint160(uint160(msg.sender)))
                         mstore(var15,temp6);
-                        var15 = (var15 + 0x20);
-                        var16 = (var16 + 0x20);
-                        var14 = (var14 - 0x20);
+                        var15 = (var15 + 0x20); // 0xD4
+                        var16 = (var16 + 0x20); // 0xC0
+                        var14 = (var14 - 0x20); // 0
                         goto label_000003B6;
                     }
                 }
@@ -120,8 +120,8 @@ label_0000040F:
                     var10 = var2;
                     var11 = var3;
                     assert((var3 < 0x20));
-                    temp7 = (0x100000000000000000000000000000000000000000000000000000000000000 * BYTE(var11,var10));
-                    var6 = (var6 + EXP(((temp7 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30),0x4));
+                    temp7 = (0x100000000000000000000000000000000000000000000000000000000000000 * BYTE(var11,var10)); // arg[i]
+                    var6 = (var6 + EXP(((temp7 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30),0x4)); // (arg[i] - 48) ** 4 (needs to be 0)
                     var3 = (0x1 + var3);
                     goto label_000002D1;
                 }
@@ -131,7 +131,7 @@ label_0000040F:
                 var10 = var2;
                 var11 = var3;
                 assert((var3 < 0x20));
-                var3 = (0x1 + var3);
+                var3 = (0x1 + var3); // keep increment until var3 > 32, do nothing
                 goto label_0000025E;
             }
         }
@@ -141,9 +141,9 @@ label_0000040F:
             var11 = var3;
             assert((var3 < 0x20));
             temp9 = (0x100000000000000000000000000000000000000000000000000000000000000 * BYTE(var11,var10));
-            var4 = ((temp9 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30);
-            var9 = (0xA > uint8(((temp9 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30)));
-            if ((uint8(((temp9 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30)) > 0xA))
+            var4 = ((temp9 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30); // arg[i] - 48
+            var9 = (0xA > uint8(((temp9 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30))); // 10 > (arg[i] - 48)
+            if ((uint8(((temp9 / 0x100000000000000000000000000000000000000000000000000000000000000) - 0x30)) > 0xA)) // (arg[i] - 48) > 10
             {
                 if (var9)
                 {
@@ -157,7 +157,7 @@ label_00000248:
                     revert(0x0,0x0);
                 }
             }
-            else if ((0x0 < uint8(var4)))
+            else if ((0x0 < uint8(var4))) // arg[i] - 48 > 0
             {
                 goto label_0000024C;
             }
