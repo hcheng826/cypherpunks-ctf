@@ -30,6 +30,7 @@ use `selfdestruct`
 Can bypass the check for `isManager` by sending the ether to the pre-computed address and turn on developer auth mode.
 TODO: need to fina a way to hack all the money faster
 10. Strong Box
+Deploy the contract and decompile it from the bytecode. Try to understand the assembly-like code and turn the complete variable to true.
 11. Dragon
 12. Crosslink Ship
 
