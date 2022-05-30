@@ -33,3 +33,8 @@ async function attackTail() {
     rawPublicKey = `0x${rawPublicKey.slice(4)}`;
     console.log('rawPublicKey:', rawPublicKey);
 }
+
+async function attackHead() {
+    const txHash1 = '0x488218f097c6ddc87571cfd98dcd3b9021624f9486277d2393af44aa101a93b6';
+    const txHash2 = '0xa2b5b2e2af95ec5ac6add6dd6757ae9eb1ba7918a71e0e8b797036fad8dbdcc6';
+}
