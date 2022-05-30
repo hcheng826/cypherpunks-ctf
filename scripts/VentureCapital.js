@@ -52,11 +52,16 @@ async function main() {
     player
   );
 
-  const newClientTx = await vc.connect(player).newClient(vca.address, 18, { value: 1 });
-  await newClientTx.wait();
+  // const newClientTx = await vc.connect(player).newClient(player.address, 18, { value: ethers.utils.parseEther('0.01') });
+  // await newClientTx.wait();
 
-  const clientWithdrawTx = await vc.connect(player).clientWithdraw(vca.address);
-  await clientWithdrawTx.wait();
+  const managementEnableTx = await vc.managementEnable(player.address);
+  console.log((await managementEnableTx.wait()).transactionHash);
+
+  const byeClientTx = await vc.byeClient({
+    gasLimit: 2000000
+  });
+  console.log((await byeClientTx.wait()).transactionHash);
 }
 
 
