@@ -1,5 +1,7 @@
 pragma solidity ^0.4.24;
 
+import 'hardhat/console.sol';
+
 contract DeveloperAuthorizer {
   bool public developerMode;
 
@@ -34,9 +36,9 @@ contract VentureCapital {
   address public owner;
   uint256 public startTime;
   uint256 public clientBalance;
-  mapping(address => bool) fundManagementEnabled;
-  mapping(address => uint256) clientIndex;
-  Client[] clients;
+  mapping(address => bool) public fundManagementEnabled;
+  mapping(address => uint256) public clientIndex;
+  Client[] public clients;
   DeveloperAuthorizer public developerAuthorizer;
 
   constructor() public payable {
@@ -67,15 +69,21 @@ contract VentureCapital {
   {
     uint256 index = clientIndex[_clientAddress];
     if (index != 0) {
+      console.log('72 index: ', index);
       Client storage client = clients[index - 1];
+      console.log('74 client.amount: ', client.amount);
       client.amount += msg.value;
       clientBalance += msg.value;
+      console.log('77 client.amount: ', client.amount);
     } else {
+      console.log('79 index: ', index);
+      console.log('80 client.amount0: ', client.amount);
       clientBalance += msg.value;
       client.manager = manager;
       client.age = _age;
       client.clientAddress = _clientAddress;
       client.amount = msg.value;
+      console.log('86 client.amount1: ', client.amount);
       clients.push(client);
       clientIndex[_clientAddress] = clients.length;
     }
@@ -101,10 +109,14 @@ contract VentureCapital {
   }
 
   function close() public isManager {
-    require(developerAuthorizer.developerMode() == false);
-    require(msg.sender == owner);
+    require(developerAuthorizer.developerMode() == false, 'developerMode is on');
+    require(msg.sender == owner, '!owner');
     require(clients.length == 0);
     msg.sender.transfer(address(this).balance);
+  }
+
+  function getClientsLength() public view returns (uint256){
+    return clients.length;
   }
 
   function() external payable {}
