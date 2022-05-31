@@ -1,7 +1,7 @@
 const { ethers } = require("hardhat");
 const hre = require('hardhat');
 
-describe.only("CrossLink", function () {
+describe("CrossLink", function () {
   it("test", async function () {
     const provider = ethers.provider;
     const [deployer, player] = await hre.ethers.getSigners();
