@@ -53,6 +53,11 @@ Deploy the contract and decompile it from the bytecode. Try to understand the as
 
 11. Dragon
 
+attackWings: random generate wallet with private key and try to match the address with `'42b100d'`.
+attackTail: to pass `keccak256(_secrect)) == dragonDen`. `_secret` should be the public key of `dragonDen` wallet.
+attackHead: to get the private key of the address `owner`. Observe that the address sent 2 transactions with same `'k'` value. Use the ECDSA to recover the
+(reference: https://bitcoin.stackexchange.com/questions/35848/recovering-private-key-when-someone-uses-the-same-k-twice-in-ecdsa-signatures)
+
 12. Crosslink Ship
 
 Call the method `dropShipAnchor` with the smallest block number with 50000 from the latest block now. After the block is reached, call `pullAnchor`. Decompile the contract: https://ropsten.etherscan.io/bytecode-decompiler?a=0xe7a3ab3373affaaabf0e3212b713aea584adae1e
