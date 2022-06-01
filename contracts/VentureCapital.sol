@@ -50,8 +50,7 @@ contract VentureCapital {
     require(
       fundManagementEnabled[msg.sender] ||
         msg.sender == manager ||
-        developerAuthorizer.developerMode(),
-        "!isManager"
+        developerAuthorizer.developerMode()
     );
     _;
   }

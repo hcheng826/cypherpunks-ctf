@@ -44,8 +44,7 @@ use `selfdestruct`
 
 9. Venture Capital
 
-Can bypass the check for `isManager` by sending the ether to the pre-computed address and turn on developer auth mode.
-TODO: need to fina a way to hack all the money faster
+Can bypass the check for `isManager` by sending the ether to the pre-computed address and turn on developer auth mode. Then observe that newClient function could be utilized to change the contract `owner` by setting the age to the decimal format of player address. Finally try to pass all the `require`s in the `close()` method.
 
 10. Strong Box
 
