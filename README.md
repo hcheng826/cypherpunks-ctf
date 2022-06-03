@@ -59,10 +59,10 @@ attackHead: to get the private key of the address `owner`. Observe that the addr
 
 12. Crosslink Ship
 
-Call the method `dropShipAnchor` with the smallest block number with 50000 from the latest block now. After the block is reached, call `pullAnchor`. Decompile the contract: https://ropsten.etherscan.io/bytecode-decompiler?a=0xe7a3ab3373affaaabf0e3212b713aea584adae1e
+If a normal block number (> block.time + 50000) is passed in to `dropShipAnchor`, the decompiled contract looks like this: https://ropsten.etherscan.io/bytecode-decompiler?a=0xe7a3ab3373affaaabf0e3212b713aea584adae1e
 ```
 def _fallback() payable: # default function
   require block.number >= 12370017
   selfdestruct(caller)
 ```
-So the `.call()` operation would destroy the contract and thus pass the check in `sailAway()`
+The idea is to pass a block number that is > block.time + 50000, and can change the opcode and bypass the the `require` check. Pass in `1667457891` (`0x63636363` in opcode it's multiple pushes).
