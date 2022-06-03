@@ -70,15 +70,15 @@ label_000002D1:
 label_000003B6:
                     if ((var14 < 0x20)) // 4th loop
                     {
-                        temp1 = mload(var16);
-                        temp2 = mload(var15);
+                        temp1 = mload(var16); // (0x1000000000000000000000000 * uint160(uint160(msg.sender)))
+                        temp2 = mload(var15); // 0
                         mstore(var15,((temp1 & ~(EXP(0x100,(0x20 - var14)) - 0x1)) | (temp2 & (EXP(0x100,(0x20 - var14)) - 0x1))));
-                        temp3 = (var13 + var11);
+                        temp3 = (var13 + var11); // 20 + 180
                         temp4 = keccak256(0xB4,(temp3 - 0xB4));
                         var8 = temp4;
                         var3 = 0x0;
 label_0000040F:
-                        if ((0x1C < var3))
+                        if ((0x1C < var3)) // 28
                         {
                             if ((var5 == var6))
                             {
@@ -108,7 +108,7 @@ label_0000040F:
                     else
                     {
                         temp6 = mload(var16); // (0x1000000000000000000000000 * uint160(uint160(msg.sender)))
-                        mstore(var15,temp6);
+                        mstore(var15,temp6); // 0xB4 = (0x1000000000000000000000000 * uint160(uint160(msg.sender)))
                         var15 = (var15 + 0x20); // 0xD4
                         var16 = (var16 + 0x20); // 0xC0
                         var14 = (var14 - 0x20); // 0
