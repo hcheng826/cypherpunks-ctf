@@ -1,4 +1,5 @@
 ### Obstacles
+
 1. Can not use Rospten
 
 Ropsten being deprecated.
@@ -10,9 +11,10 @@ The deployment of contract itself exceed the block gas limit. Will use local har
 Can bypass the check for `isManager` by sending the ether to the pre-computed address and turn on developer auth mode. But could only get a little money (100 wei) out each transaction. Couldn't find the way to quickly hack all the money.
 
 ### Solutions
+
 1. Bank
 
-Underflow the balance (29 - 30 = 2**256-1).
+Underflow the balance (29 - 30 = 2\*\*256-1).
 
 2. Encrypt
 
@@ -60,9 +62,11 @@ attackHead: to get the private key of the address `owner`. Observe that the addr
 12. Crosslink Ship
 
 If a normal block number (> block.time + 50000) is passed in to `dropShipAnchor`, the decompiled contract looks like this: https://ropsten.etherscan.io/bytecode-decompiler?a=0xe7a3ab3373affaaabf0e3212b713aea584adae1e
+
 ```
 def _fallback() payable: # default function
   require block.number >= 12370017
   selfdestruct(caller)
 ```
+
 The idea is to pass a block number that is > block.time + 50000, and can change the opcode and bypass the the `require` check. Pass in `1667457891` (`0x63636363` in opcode it's multiple pushes).

@@ -1,6 +1,7 @@
 const { ethers } = require("hardhat");
 
 function attackWings() {
+    /* run this to search for the fuzzy match account
     while(true) {
         const newWallet = ethers.Wallet.createRandom();
         if (newWallet.address.match('42b100d')) {
@@ -9,6 +10,21 @@ function attackWings() {
             break;
         }
     }
+    */
+
+
+    const wallet = new ethers.Wallet(
+        "0x04431d256ee73593744ac46bdc57338e82d56bb59cd8825567ad7e906a3b89b2"
+    );
+    const dragon = await ethers.getContractAt(
+        require("../artifacts/contracts/Dragon.sol/Dragon.json").abi,
+        "0x6d61ca77f76c242ab328d8de3eb417cc501f1270",
+        wallet.connect(ethers.provider)
+    );
+    const attackWingsTx = await dragon.attackWings(wallet.address, {
+        gasLimit: 2e6,
+    });
+    await attackWingsTx.wait();
 }
 
 async function attackTail() {
