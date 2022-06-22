@@ -1,16 +1,10 @@
-### Obstacles
+# Cypherpunks-ctf
 
-1. Can not use Rospten
+https://cypherpunks-core.github.io/cypherpunks-ctf/
 
-Ropsten being deprecated.
-https://discord.com/channels/714888181740339261/885976962894549023/979576665082564608
-The deployment of contract itself exceed the block gas limit. Will use local hardhat network to complete the remaining challenges
+Cypherpunks-ctf is a series of challanges about smart contract vulnerabilities. In each challenge there is a contract with security issue. And player need to find it and try to exploit the contract.
 
-2. Venture Captical
-
-Can bypass the check for `isManager` by sending the ether to the pre-computed address and turn on developer auth mode. But could only get a little money (100 wei) out each transaction. Couldn't find the way to quickly hack all the money.
-
-### Solutions
+## Solutions
 
 1. Bank
 
