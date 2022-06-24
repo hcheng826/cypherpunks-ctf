@@ -1,8 +1,11 @@
 # Cypherpunks-ctf
 
-https://cypherpunks-core.github.io/cypherpunks-ctf/
+Cypherpunks-ctf is like [The Ethernaut](https://ethernaut.openzeppelin.com/) from OpenZeppelin, or the [Capture The Ether] challenge. It is a game or a challenge that help player learn the knowledge of smart contract security. The challenge consists of a series of levels about smart contract vulnerabilities. In each level there is a contract with security issue. And player need to find it, try to exploit the contract and pass that level.
 
-Cypherpunks-ctf is a series of challanges about smart contract vulnerabilities. In each challenge there is a contract with security issue. And player need to find it and try to exploit the contract.
+I have completed the challenge and this repo consist of all the solutions for the challenge. The techniques used has a wide range: variable underflow, reentrancy attack, get private variable value by reading storage on chain or read state change on block explorer, the risk of delegatecall changing unexpected variables, bypass `extcodesize` check for whether caller is a contract, bypecode manipulation, etc.
+
+Cypherpunks-ctf website:
+https://cypherpunks-core.github.io/cypherpunks-ctf/
 
 ## Solutions
 
@@ -20,7 +23,7 @@ Use fallback function to make a reentrancy attack. Before the state is change, c
 
 4. University
 
-Need to calculate the storage slot for the contract. Then read the state change on the deployment transaction. And find the content in the private array name[2].
+Need to calculate the storage slot for the contract. Then read the state change on the deployment transaction(from Etherscan). And find the content in the private array name[2].
 
 5. Fake Fibonacci
 
